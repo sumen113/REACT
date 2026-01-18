@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import * as Loaders from "react-loader-spinner";
-import "../index.css";
+import "../Index.css";
 
 const getCSSVariable = (name) =>
   getComputedStyle(document.documentElement).getPropertyValue(name).trim();

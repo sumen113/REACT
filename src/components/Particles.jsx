@@ -6,9 +6,7 @@ import "../Index.css";
 const getCSSVariable = (name) =>
   getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
-const defaultColors = [
-  getCSSVariable("--text")
-];
+const defaultColors = [getCSSVariable("--text")];
 
 const hexToRgb = (hex) => {
   hex = hex.replace(/^#/, "");
@@ -143,15 +141,12 @@ const Particles = ({
     const positions = new Float32Array(count * 3);
     const randoms = new Float32Array(count * 4);
     const colors = new Float32Array(count * 3);
-    const defaultColors = [
-      getCSSVariable("--text")
-    ];
-    
+    const defaultColors = [getCSSVariable("--text")];
+
     const palette =
       particleColors && particleColors.length > 0
         ? particleColors
         : defaultColors;
-    
 
     for (let i = 0; i < count; i++) {
       let x, y, z, len;
