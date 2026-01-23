@@ -178,6 +178,7 @@ const Settings = () => {
     <div className="View">
       <LoadingScreen loading={loading} loaderType={loaderType} />
       <Particles
+        key={theme}
         particleCount={200}
         particleSpread={5}
         speed={0.1}

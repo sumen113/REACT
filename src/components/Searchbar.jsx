@@ -1,46 +1,35 @@
 import React, { useState } from "react";
 
-const SearchBar = ({ active }) => {
+const SearchBar = ({ active, setIframeSrc }) => {
   const [query, setQuery] = useState("");
 
   const PROXY_BASE = "https://ashamed-lucilia-ffsdsefe-ef618c65.koyeb.app/#";
 
   const getValidUrl = (input) => {
-    if (!input) return "/error";
+    if (!input) return null;
 
     let url = input.trim();
-
-    if (!/^https?:\/\//i.test(url)) {
-      url = "https://" + url;
-    }
+    if (!/^https?:\/\//i.test(url)) url = "https://" + url;
 
     try {
       const parsed = new URL(url);
-
-      if (!parsed.hostname.includes(".")) {
-        throw new Error("Invalid domain");
-      }
-
+      if (!parsed.hostname.includes(".")) throw new Error();
       const clean = url.replace(/^https?:\/\//i, "");
       return `${PROXY_BASE}${clean}`;
     } catch {
-      return `/error`;
+      return null;
     }
   };
 
-  const handleKeyDown = (e) => {     
+  const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       const viewParent = e.target.closest(".View");
       if (viewParent) {
+        // viewParent.classList.add("active");
         const src = getValidUrl(query);
+        if (!src) return;
 
-        viewParent.classList.add("active");
-        viewParent.innerHTML = `
-          <iframe 
-            src="${src}" 
-            style="border-radius:1rem;width:100%;height:100%;border:none;"
-          ></iframe>
-        `;
+        setIframeSrc(src);
       }
     }
   };

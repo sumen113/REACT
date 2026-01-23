@@ -9,6 +9,11 @@ import Particles from "../components/Particles";
 import useGlobalDailyCounter from "../components/UseGlobalDailyCounter";
 
 const App = () => {
+  const [iframeSrc, setIframeSrc] = useState(null);
+  const [iframeLoading, setIframeLoading] = useState(false);
+  const iframeTimeoutRef = useRef(null);
+  const iframeStartTimeRef = useRef(0);
+
   const [sactive, satActive] = useState(false);
   const chatRef = useRef(null);
 
@@ -94,6 +99,25 @@ const App = () => {
     link.href = activeCloak.favicon;
   }, [cloak]);
 
+  useEffect(() => {
+    if (!iframeSrc) return;
+
+    iframeStartTimeRef.current = Date.now();
+    setIframeLoading(true);
+
+    iframeTimeoutRef.current = setTimeout(() => {
+      setIframeLoading(false);
+      iframeTimeoutRef.current = null;
+    }, 8000);
+
+    return () => {
+      if (iframeTimeoutRef.current) {
+        clearTimeout(iframeTimeoutRef.current);
+        iframeTimeoutRef.current = null;
+      }
+    };
+  }, [iframeSrc]);
+
   const nav = [
     {
       icon: (
@@ -145,7 +169,6 @@ const App = () => {
     <div className="View">
       <LoadingScreen loading={loading} loaderType={loaderType} />
       <Particles
-        key={theme}
         particleCount={200}
         particleSpread={5}
         speed={0.1}
@@ -163,7 +186,7 @@ const App = () => {
           direction="up"
           duration={1}
           className="count-up-text"
-          delay={1}
+          delay={4}
         />
       </div>
       <Navbar
@@ -199,7 +222,11 @@ const App = () => {
             }}
           ></i>
         </button>
-        <SearchBar active={active} />
+        <SearchBar
+          active={active}
+          setIframeSrc={setIframeSrc}
+          setIframeLoading={setIframeLoading}
+        />
       </div>
 
       <div
@@ -207,13 +234,36 @@ const App = () => {
         className={`chatb ${sactive ? "active" : ""}`}
         onClick={() => satActive((prev) => !prev)}
       >
-        <iframe
-          src="https://ashamed-lucilia-ffsdsefe-ef618c65.koyeb.app/#https://sumensitechat.vercel.app/"
-          className="chatiframe"
-          title="chat"
-        />
+        <iframe src="/chat" className="chatiframe" title="chat" />
         <i className="fa-solid fa-message-dots chati"></i>
       </div>
+
+      {iframeSrc && (
+        <>
+          <LoadingScreen loading={iframeLoading} loaderType={loaderType} />
+
+          <iframe
+            src={iframeSrc}
+            style={{
+              width: "100%",
+              height: "100%",
+              border: "none",
+              position: "absolute",
+              inset: 0,
+              zIndex: 900,
+            }}
+            onLoad={() => {
+              const elapsed = Date.now() - iframeStartTimeRef.current;
+              const remaining = Math.max(8000 - elapsed, 0);
+
+              setTimeout(() => {
+                setIframeLoading(false);
+              }, remaining);
+            }}
+            title="Proxy View"
+          />
+        </>
+      )}
     </div>
   );
 };

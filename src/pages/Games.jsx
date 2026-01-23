@@ -5,6 +5,11 @@ import Navbar from "../components/Navbar";
 import Select from "../components/Selector";
 
 const Games = () => {
+  const setCookie = (name, value, days = 365) => {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  };
+
   const getCookie = (name) => {
     return document.cookie
       .split("; ")
@@ -107,80 +112,123 @@ const Games = () => {
     },
   ];
 
-  const games = [
+  const initialGames = [
+    {
+      name: "Suggest a Game",
+      image: "/gameicons/suggest.png",
+      link: "https://tally.so/r/yPJDzx",
+      star: false,
+      newTab: true,
+      pinned: true,
+    },
     {
       name: "Cookie Clicker",
-      image: "/src/gameicons/cookieclicker.png",
+      image: "/gameicons/cookieclicker.png",
       link: "https://g8hh.github.io/cookieclicker/",
       star: true,
     },
     {
       name: "Happy Wheels",
-      image: "/src/gameicons/happywheels.png",
+      image: "/gameicons/happywheels.png",
       link: "https://cbgamesdev.github.io/chilibowlflash/hw/index.html",
       star: true,
     },
     {
       name: "Drive Mad",
-      image: "/src/gameicons/drivemad.png",
+      image: "/gameicons/drivemad.png",
       link: "https://lnahtml.github.io/a77/drive-mad/",
       star: true,
     },
     {
       name: "Ragdoll Archers",
-      image: "/src/gameicons/ragdollarchers.png",
+      image: "/gameicons/ragdollarchers.png",
       link: "https://bitlifeonline.github.io/ragdoll-archers/",
       star: true,
     },
     {
       name: "BitLife",
-      image: "/src/gameicons/bitlife.png",
+      image: "/gameicons/bitlife.png",
       link: "https://bitlifeonline.github.io/class/index.html",
       star: true,
     },
     {
       name: "Tag",
-      image: "/src/gameicons/tag.png",
+      image: "/gameicons/tag.png",
       link: "https://abinbins.github.io/a3/tag/",
       star: true,
     },
     {
       name: "Football Legends",
-      image: "/src/gameicons/footballlegends.png",
+      image: "/gameicons/footballlegends.png",
       link: "https://footballlegends-online.github.io/file/",
       star: true,
     },
     {
       name: "Basketball Legends",
-      image: "/src/gameicons/basketballlegends.png",
+      image: "/gameicons/basketballlegends.png",
       link: "https://basketball-legends-online.github.io/file/",
       star: true,
     },
     {
       name: "Super Soccer Noggins",
-      image: "/src/gameicons/supersoccernoggins.png",
-      link: "https://html5.gamedistribution.com/rvvASMiM/e9020d1fa4bd48d6ad5da5c6981faa0c/index.html?gdpr-tracking=0&gdpr-targeting=0&gdpr-third-party=0%3Fgd_sdk_referrer_url%3Dhttps%3A%2F%2Ftinyplay.io%2Fsuper-soccer-noggins&rd=1&gd_zone_config=eyJwYXJlbnRVUkwiOiJodHRwczovL2h0bWw1LmdhbWVkaXN0cmlidXRpb24uY29tL2U5MDIwZDFmYTRiZDQ4ZDZhZDVkYTVjNjk4MWZhYTBjLz9nZHByLXRyYWNraW5nPTAmZ2Rwci10YXJnZXRpbmc9MCZnZHByLXRoaXJkLXBhcnR5PTA%252FZ2Rfc2RrX3JlZmVycmVyX3VybD1odHRwczovL3RpbnlwbGF5LmlvL3N1cGVyLXNvY2Nlci1ub2dnaW5zJnJkPTEiLCJwYXJlbnREb21haW4iOiJodG1sNS5nYW1lZGlzdHJpYnV0aW9uLmNvbSIsInRvcERvbWFpbiI6Imh0bWw1LmdhbWVkaXN0cmlidXRpb24uY29tIiwiaGFzSW1wcmVzc2lvbiI6ZmFsc2UsImxvYWRlckVuYWJsZWQiOnRydWUsImhvc3QiOiJodG1sNS5nYW1lZGlzdHJpYnV0aW9uLmNvbSIsInZlcnNpb24iOiIxLjUuMTgifQ%253D%253D",
+      image: "/gameicons/supersoccernoggins.png",
+      link: "...",
       star: true,
     },
     {
       name: "Slope",
-      image: "/src/gameicons/slope.png",
+      image: "/gameicons/slope.png",
       link: "https://slopeunblocked.bitbucket.io/file/",
       star: true,
     },
     {
       name: "Geometry Dash",
-      image: "/src/gameicons/geometrydash.png",
+      image: "/gameicons/geometrydash.png",
       link: "https://geometrylitepc.io/game/geometry-dash-lite/",
       star: true,
     },
     {
       name: "Ovo",
-      image: "/src/gameicons/ovo.png",
+      image: "/gameicons/ovo.png",
       link: "https://ovoclassic-pro.github.io/file/",
       star: true,
     },
   ];
+
+  const starredFromCookie = (() => {
+    const raw = getCookie("starredGames");
+    return raw ? decodeURIComponent(raw).split(",") : [];
+  })();
+
+  const [games, setGames] = useState(
+    initialGames.map((game) => ({
+      ...game,
+      starred: starredFromCookie.includes(game.name),
+    }))
+  );
+
+  useEffect(() => {
+    const starredNames = games.filter((g) => g.starred).map((g) => g.name);
+    setCookie("starredGames", starredNames.join(","));
+  }, [games]);
+
+  const toggleStar = (name) => {
+    setGames((prev) =>
+      prev.map((game) =>
+        game.name === name && !game.pinned
+          ? { ...game, starred: !game.starred }
+          : game
+      )
+    );
+  };
+
+  const sortedGames = [...games].sort((a, b) => {
+    if (a.pinned) return -1;
+    if (b.pinned) return 1;
+    if (a.starred && !b.starred) return -1;
+    if (!a.starred && b.starred) return 1;
+    return 0;
+  });
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -212,7 +260,7 @@ const Games = () => {
         baseItemSize={50}
         magnification={70}
       />
-      <Select select={games} />
+      <Select select={sortedGames} onStarClick={toggleStar} />
     </div>
   );
 };

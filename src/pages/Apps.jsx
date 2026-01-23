@@ -5,6 +5,11 @@ import Navbar from "../components/Navbar";
 import Select from "../components/Selector";
 
 const Apps = () => {
+  const setCookie = (name, value, days = 365) => {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  };
+
   const getCookie = (name) => {
     return document.cookie
       .split("; ")
@@ -107,56 +112,100 @@ const Apps = () => {
     },
   ];
 
-  const apps = [
+  const initialApps = [
+    {
+      name: "Suggest an App",
+      image: "/appicons/suggest.png",
+      link: "https://tally.so/r/yPJDzx",
+      star: false,
+      newTab: true,
+      pinned: true,
+    },
     {
       name: "Google(unblocked)",
-      image: "/src/appicons/google.png",
+      image: "/appicons/google.png",
       link: "https://google.com",
       star: true,
     },
     {
       name: "ChatGPT",
-      image: "/src/appicons/chatgpt.png",
+      image: "/appicons/chatgpt.png",
       link: "https://chatgpt.com",
       star: true,
     },
     {
       name: "YouTube",
-      image: "/src/appicons/youtube.png",
+      image: "/appicons/youtube.png",
       link: "https://www.youtube.com",
       star: true,
     },
     {
       name: "Tiktok",
-      image: "/src/appicons/tiktok.png",
+      image: "/appicons/tiktok.png",
       link: "https://www.tiktok.com",
       star: true,
     },
     {
       name: "Twitch",
-      image: "/src/appicons/twitch.png",
+      image: "/appicons/twitch.png",
       link: "https://www.twitch.tv/",
       star: true,
     },
     {
       name: "Instagram",
-      image: "/src/appicons/instagram.png",
+      image: "/appicons/instagram.png",
       link: "https://www.instagram.com/",
       star: true,
     },
     {
       name: "Netflix",
-      image: "/src/appicons/netflix.png",
+      image: "/appicons/netflix.png",
       link: "https://www.netflix.com",
       star: true,
     },
     {
       name: "Crunchyroll",
-      image: "/src/appicons/crunchyroll.png",
+      image: "/appicons/crunchyroll.png",
       link: "https://www.crunchyroll.com/",
       star: true,
     },
   ];
+
+  const starredFromCookie = (() => {
+    const raw = getCookie("starredApps");
+    return raw ? decodeURIComponent(raw).split(",") : [];
+  })();
+
+  const [apps, setApps] = useState(
+    initialApps.map((app) => ({
+      ...app,
+      starred: starredFromCookie.includes(app.name),
+    }))
+  );
+
+  useEffect(() => {
+    const starredNames = apps.filter((a) => a.starred).map((a) => a.name);
+
+    setCookie("starredApps", starredNames.join(","));
+  }, [apps]);
+
+  const toggleStar = (name) => {
+    setApps((prev) =>
+      prev.map((app) =>
+        app.name === name && !app.pinned
+          ? { ...app, starred: !app.starred }
+          : app
+      )
+    );
+  };
+
+  const sortedApps = [...apps].sort((a, b) => {
+    if (a.pinned) return -1;
+    if (b.pinned) return 1;
+    if (a.starred && !b.starred) return -1;
+    if (!a.starred && b.starred) return 1;
+    return 0;
+  });
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -188,7 +237,7 @@ const Apps = () => {
         baseItemSize={50}
         magnification={70}
       />
-      <Select select={apps} />
+      <Select select={sortedApps} onStarClick={toggleStar} />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import Movies from "./pages/Movies.jsx";
 import Settings from "./pages/Settings.jsx";
 import Frame from "./pages/Frame.jsx";
 import Error from "./pages/404.jsx";
+import Chat from "./pages/Chat.jsx";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -20,6 +21,8 @@ root.render(
       <Route path="/movies" element={<Movies />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/frame" element={<Frame />} />
+      <Route path="/Chat" element={<Chat />} />
+
 
       <Route path="*" element={<Error />} />
     </Routes>
