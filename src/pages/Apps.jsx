@@ -169,6 +169,12 @@ const Apps = () => {
       link: "https://www.crunchyroll.com/",
       star: true,
     },
+    {
+      name: "Wordle",
+      image: "/appicons/wordle.jpg",
+      link: "https://www.nytimes.com/games/wordle/index.html",
+      star: true,
+    },
   ];
 
   const starredFromCookie = (() => {

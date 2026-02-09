@@ -140,9 +140,27 @@ const Games = () => {
       star: true,
     },
     {
+      name: "Drift Boss",
+      image: "/gameicons/driftboss.jpg",
+      link: "https://html5.gamedistribution.com/rvvASMiM/0a8b51e5eaee42e7b4db83ca00afc92e/index.html?gd_sdk_referrer_url=https%3A%2F%2Fgamedistribution.com%2Fgames%2Fdrift-boss%2F&gd_zone_config=eyJwYXJlbnRVUkwiOiJodHRwczovL2h0bWw1LmdhbWVkaXN0cmlidXRpb24uY29tLzBhOGI1MWU1ZWFlZTQyZTdiNGRiODNjYTAwYWZjOTJlLz9nZF9zZGtfcmVmZXJyZXJfdXJsPWh0dHBzOi8vZ2FtZWRpc3RyaWJ1dGlvbi5jb20vZ2FtZXMvZHJpZnQtYm9zcy8iLCJwYXJlbnREb21haW4iOiJnYW1lZGlzdHJpYnV0aW9uLmNvbSIsInRvcERvbWFpbiI6ImdhbWVkaXN0cmlidXRpb24uY29tIiwiaGFzSW1wcmVzc2lvbiI6ZmFsc2UsImxvYWRlckVuYWJsZWQiOnRydWUsImhvc3QiOiJodG1sNS5nYW1lZGlzdHJpYnV0aW9uLmNvbSIsInZlcnNpb24iOiIxLjUuMTgifQ%253D%253D",
+      star: true,
+    },
+    {
       name: "Ragdoll Archers",
       image: "/gameicons/ragdollarchers.png",
       link: "https://bitlifeonline.github.io/ragdoll-archers/",
+      star: true,
+    },
+    {
+      name: "Ragdoll Hit",
+      image: "/gameicons/ragdollhit.jpg",
+      link: "https://freetoplayz.github.io/ragdoll-hit/",
+      star: true,
+    },
+    {
+      name: "Stickman Hook",
+      image: "/gameicons/stickmanhook.png",
+      link: "https://stickmanhookonline.io/game/stickman-hook/",
       star: true,
     },
     {
@@ -193,6 +211,19 @@ const Games = () => {
       link: "https://ovoclassic-pro.github.io/file/",
       star: true,
     },
+    {
+      name: "Five Nights at Epstein's",
+      image: "/gameicons/fnae.png",
+      link: "https://fivenightsatepsteins.org/FNAE-HTML5-1.1.5/index.html?autostart=1",
+      star: true,
+    },
+    {
+      name: "Ducklife 7",
+      image: "/gameicons/ducklife7.jpg",
+      link: "https://games.wixgames.co.uk/games/ducklifebattledemo/webgl/",
+      star: true,
+    },
+
   ];
 
   const starredFromCookie = (() => {
