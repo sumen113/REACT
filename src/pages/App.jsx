@@ -189,6 +189,12 @@ const App = () => {
           delay={4}
         />
       </div>
+      <Navbar
+        items={nav}
+        panelHeight={60}
+        baseItemSize={50}
+        magnification={70}
+      />
       <div className="Name-Wrapper">
         <DecryptedText
           text="DO YOUR WORK"
@@ -199,8 +205,38 @@ const App = () => {
           sequential={true}
           className="Name"
         />
+        <button
+          className={`SearchButton ${active ? "active" : ""}`}
+          onClick={() => setActive(!active)}
+        >
+          <i
+            className="fa-solid fa-magnifying-glass"
+            style={{
+              color: "#fff",
+              fontSize: "150%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: "100%",
+            }}
+          ></i>
+        </button>
+        <SearchBar
+          active={active}
+          setIframeSrc={setIframeSrc}
+          setIframeLoading={setIframeLoading}
+        />
       </div>
 
+      <div
+        ref={chatRef}
+        className={`chatb ${sactive ? "active" : ""}`}
+        onClick={() => satActive((prev) => !prev)}
+      >
+        <iframe src="/chat" className="chatiframe" title="chat" />
+        <i className="fa-solid fa-message-dots chati"></i>
+      </div>
 
       {iframeSrc && (
         <>
