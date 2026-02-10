@@ -197,7 +197,7 @@ const App = () => {
       />
       <div className="Name-Wrapper">
         <DecryptedText
-          text="Sumensite"
+          text="DO YOUR WORK"
           speed={75}
           maxIterations={10}
           animateOn="both"
