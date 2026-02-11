@@ -32,17 +32,17 @@ body {
 }
 
 :root {
-  --dark: #1a3b12;
-  --light: #256417;
-  --lightransparent: #2564178c;
-  --text: #32961b;
+  --dark: #1f1f1f;
+  --light: #595958;
+  --lightransparent: #5959588c;
+  --text: #8a8a8a;
 }
 
 [data-theme="green"] {
-  --dark: #1a3b12;
-  --light: #256417;
-  --lightransparent: #2564178c;
-  --text: #32961b;
+  --dark: #1f1f1f;
+  --light: #595958;
+  --lightransparent: #5959588c;
+  --text: #8a8a8a;
 }
 
 [data-theme="blue"] {
