@@ -197,7 +197,7 @@ const App = () => {
       />
       <div className="Name-Wrapper">
         <DecryptedText
-          text="DO YOUR WORK"
+          text="HAPPY HALOWEEN"
           speed={75}
           maxIterations={10}
           animateOn="both"
