@@ -223,6 +223,12 @@ const Games = () => {
       link: "https://games.wixgames.co.uk/games/ducklifebattledemo/webgl/",
       star: true,
     },
+    {
+      name: "Ducklife 3",
+      image: "/gameicons/ducklife7.jpg",
+      link: "https://games.wixgames.co.uk/game.php?id=ducklife3",
+      star: true,
+    },
 
   ];
 
