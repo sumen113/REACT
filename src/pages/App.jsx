@@ -229,14 +229,7 @@ const App = () => {
         />
       </div>
 
-      <div
-        ref={chatRef}
-        className={`chatb ${sactive ? "active" : ""}`}
-        onClick={() => satActive((prev) => !prev)}
-      >
-        <iframe src="/chat" className="chatiframe" title="chat" />
-        <i className="fa-solid fa-message-dots chati"></i>
-      </div>
+      
 
       {iframeSrc && (
         <>
