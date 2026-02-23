@@ -197,7 +197,7 @@ const App = () => {
       />
       <div className="Name-Wrapper">
         <DecryptedText
-          text="Sumensite"
+          text="anything but the 3 missing asignments"
           speed={75}
           maxIterations={10}
           animateOn="both"
@@ -229,14 +229,7 @@ const App = () => {
         />
       </div>
 
-      <div
-        ref={chatRef}
-        className={`chatb ${sactive ? "active" : ""}`}
-        onClick={() => satActive((prev) => !prev)}
-      >
-        <iframe src="/chat" className="chatiframe" title="chat" />
-        <i className="fa-solid fa-message-dots chati"></i>
-      </div>
+      
 
       {iframeSrc && (
         <>
